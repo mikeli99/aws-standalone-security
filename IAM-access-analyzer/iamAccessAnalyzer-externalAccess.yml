@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  Tagkey:
+    Description: Enter the Tag Key
+    Type: String
+    Default: Team
+  Tagvalue:
+    Description: Enter the Tag Value
+    Type: String
+    Default: Security
+
+Resources:
+  Analyzer:
+    Type: 'AWS::AccessAnalyzer::Analyzer'
+
+    Properties:
+      AnalyzerName: External-access
+      Type: ACCOUNT
+      Tags:
+        -
+          Key: !Ref Tagkey
+          Value: !Ref Tagvalue

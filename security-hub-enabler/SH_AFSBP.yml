@@ -1,0 +1,30 @@
+Description: Enable Security Hub with CIS AWS foundational Benchmark v1.4.0  
+
+Resources:
+  ExampleHubWithTags:
+    Type: 'AWS::SecurityHub::Hub'
+    Properties:
+      Tags:
+        ManagedBy: IaC CFn
+        Name: hub-5G-Sandbox
+      EnableDefaultStandards: false
+      ControlFindingGenerator: 'SECURITY_CONTROL'
+
+  AFSBPStandard:
+    DependsOn: ExampleHubWithTags
+    Type: 'AWS::SecurityHub::Standard'
+    Properties:
+      StandardsArn: !Sub 'arn:${AWS::Partition}:securityhub:${AWS::Region}::standards/aws-foundational-security-best-practices/v/1.0.0'
+
+  #CISStandard:
+  #  DependsOn: ExampleHubWithTags
+  #  Type: 'AWS::SecurityHub::Standard'
+  #  Properties:
+  #    StandardsArn: !Sub 'arn:${AWS::Partition}:securityhub:${AWS::Region}::standards/cis-aws-foundations-benchmark/v/1.4.0'
+
+Outputs:
+  HubArn:
+    Value: !Ref ExampleHubWithTags
+  StandardsSubscriptionArn1:
+    Value: !Ref AFSBPStandard
+#    Value: !Ref CISStandard

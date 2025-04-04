@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  Unuseddays:
+    Description: The number of days that have not been used
+    Type: Number
+    Default: 90
+  Tagkey:
+    Description: Enter the Tag Key
+    Type: String
+    Default: Team
+  Tagvalue:
+    Description: Enter the Tag Value
+    Type: String
+    Default: Security
+
+Resources:
+  Analyzer:
+    Type: 'AWS::AccessAnalyzer::Analyzer'
+
+    Properties:
+      AnalyzerName: Unused_access
+      Type: ACCOUNT_UNUSED_ACCESS
+      AnalyzerConfiguration: 
+        UnusedAccessConfiguration:
+            UnusedAccessAge: !Ref Unuseddays
+      Tags:
+        -
+          Key: !Ref Tagkey
+          Value: !Ref Tagvalue
